@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Purpose Combo Shop v2 (Fuller demo)
 
 ## What’s improved vs v1
@@ -23,3 +24,7 @@ Users can self-register.
 ## H2 console
 http://localhost:8080/h2
 JDBC URL: jdbc:h2:mem:combo
+=======
+# springboot-microservices
+Microservices-based application with automated CI/CD pipeline using GitHub Actions, Docker, and AWS EC2 deployment.
+>>>>>>> 28c196b293c2d5d461805fe0ab1f481553fde0a6
