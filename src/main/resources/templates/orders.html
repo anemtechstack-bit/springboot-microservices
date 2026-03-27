@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>My Orders</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body>
+  <div th:replace="~{fragments :: nav}"></div>
+
+  <div class="container">
+    <div class="card">
+      <h2 style="margin:0 0 6px">My Orders</h2>
+      <p class="muted" style="margin:0 0 14px">Open an order to view details and cancel if needed.</p>
+
+      <div th:if="${#lists.isEmpty(orders)}" class="muted">No orders yet.</div>
+
+      <div th:if="${!#lists.isEmpty(orders)}" style="overflow:auto">
+        <table class="table">
+          <thead>
+          <tr><th>Order ID</th><th>Status</th><th>Purpose</th><th>Date</th><th>Total</th><th></th></tr>
+          </thead>
+          <tbody>
+          <tr th:each="o : ${orders}">
+            <td><b th:text="${o.id}">1</b></td>
+            <td><span class="chip" th:text="${o.status}">PLACED</span></td>
+            <td th:text="${o.purpose}">HOSTEL</td>
+            <td class="muted" th:text="${o.createdAt}">date</td>
+            <td th:text="${o.totalAmount}">0</td>
+            <td><a class="btn secondary" th:href="@{/orders/{id}(id=${o.id})}">View</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments :: footer}"></div>
+  <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

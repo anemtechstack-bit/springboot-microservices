@@ -1,0 +1,32 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Login</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body>
+  <div class="container" style="padding-top:40px">
+    <div class="card" style="max-width:520px;margin:0 auto">
+      <h2 style="margin:0 0 6px">Login</h2>
+      <p class="muted" style="margin:0 0 14px">Admin: <b>admin/admin</b> • Or create your user account.</p>
+      <div th:if="${ok != null}" class="toast" th:text="${ok}"></div>
+
+      <form th:action="@{/login}" method="post">
+        <div class="field">
+          <label>Username</label>
+          <input name="username" required />
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input name="password" type="password" required />
+        </div>
+        <button class="btn" type="submit">Sign in</button>
+        <a class="btn secondary" th:href="@{/register}">Create account</a>
+        <a class="btn secondary" th:href="@{/}">Back</a>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

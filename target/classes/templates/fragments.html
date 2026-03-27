@@ -1,0 +1,41 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<body>
+  <div th:fragment="nav">
+    <div class="nav">
+      <div class="nav-inner">
+        <a class="brand" th:href="@{/}">
+          <span class="pill">🛒</span>
+          <span>Purpose Combo Shop</span>
+          <span class="badge">v2.3.2</span>
+        </a>
+
+        <div class="nav-links">
+          <a class="pill" th:href="@{/products}">Products</a>
+          <a class="pill" th:href="@{/combo}">Combo Builder</a>
+          <a class="pill" th:href="@{/cart}">
+            Cart <span class="badge" th:text="${cartCount}">0</span>
+          </a>
+
+          <a class="pill" sec:authorize="isAuthenticated()" th:href="@{/orders}">My Orders</a>
+          <a class="pill" sec:authorize="isAuthenticated()" th:href="@{/returns}">Returns</a>
+          <a class="pill" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/admin}">Admin</a>
+
+          <a class="pill" sec:authorize="isAnonymous()" th:href="@{/login}">Login</a>
+          <a class="pill" sec:authorize="isAnonymous()" th:href="@{/register}">Register</a>
+
+          <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+            <button class="pill" style="cursor:pointer" type="submit">Logout</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:fragment="footer">
+    <div class="footer container">
+      Purpose-based optimized combo • budget + surprise • one-click cart • orders • returns (with policy) • admin.
+    </div>
+  </div>
+</body>
+</html>

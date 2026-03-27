@@ -1,0 +1,55 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Admin Returns</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body>
+  <div th:replace="~{fragments :: nav}"></div>
+
+  <div class="container">
+    <div class="card">
+      <h2 style="margin:0 0 6px">Return Requests</h2>
+      <p class="muted" style="margin:0 0 14px">APPROVE/REJECT/REFUND (Refund restores stock).</p>
+
+      <div th:if="${#lists.isEmpty(returns)}" class="muted">No returns.</div>
+
+      <div th:if="${!#lists.isEmpty(returns)}" style="overflow:auto">
+        <table class="table">
+          <thead><tr><th>ID</th><th>User</th><th>Order</th><th>Product</th><th>Qty</th><th>Reason</th><th>Image</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+          <tr th:each="r : ${returns}">
+            <td><b th:text="${r.id}">1</b></td>
+            <td th:text="${r.username}">user</td>
+            <td th:text="${r.order.id}">1</td>
+            <td th:text="${r.product.name}">P</td>
+            <td th:text="${r.quantity}">1</td>
+            <td class="muted" th:text="${r.reason}">reason</td>
+            <td>
+              <a th:if="${r.imagePath != null}" class="btn link" th:href="@{/uploads(f=${r.imagePath})}" target="_blank">View</a>
+              <span th:if="${r.imagePath == null}" class="muted">-</span>
+            </td>
+            <td><span class="chip" th:text="${r.status}">REQUESTED</span></td>
+            <td>
+              <form method="post" th:action="@{/admin/returns/{id}/status(id=${r.id})}">
+                <select name="status">
+                  <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}" th:selected="${s} == ${r.status}"></option>
+                </select>
+                <button class="btn warn" type="submit">Update</button>
+              </form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a class="btn secondary" th:href="@{/admin}">Back</a>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments :: footer}"></div>
+  <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

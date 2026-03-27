@@ -1,0 +1,80 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Purpose Combo Shop</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body>
+  <div th:replace="~{fragments :: nav(cartCount=${cartCount})}"></div>
+
+  <div class="container hero">
+    <h1>Purpose-based shopping, <span style="color:var(--brand)">ready-to-buy combos</span>.</h1>
+    <p>
+      Choose a purpose (Hostel / Gym / Birthday), set optional budget, and we generate an optimized combo.
+      Add all items to cart in one click, checkout, and manage returns properly.
+    </p>
+    <div class="row" style="margin-top:12px">
+      <a class="btn" th:href="@{/combo}">Generate Combo →</a>
+      <a class="btn secondary" th:href="@{/products}">Browse Products</a>
+    </div>
+  </div>
+
+  <div class="container grid grid-3">
+    <div class="card">
+      <div class="chip">1) Choose Purpose</div>
+      <h3 style="margin:10px 0 6px">Hostel / Gym / Birthday</h3>
+      <p class="muted">Purpose drives the selection and combo optimization.</p>
+    </div>
+    <div class="card">
+      <div class="chip">2) Optimized Combo</div>
+      <h3 style="margin:10px 0 6px">Utility / Price</h3>
+      <p class="muted">Greedy best-value selection. Budget and surprise are optional.</p>
+    </div>
+    <div class="card">
+      <div class="chip">3) Full Flow</div>
+      <h3 style="margin:10px 0 6px">Cart → Order → Return</h3>
+      <p class="muted">Checkout creates order, returns enforce window policy, admin handles statuses.</p>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top:14px">
+    <div class="card">
+      <div class="row" style="align-items:center;justify-content:space-between">
+        <div>
+          <h2 style="margin:0">Popular products</h2>
+          <p class="muted" style="margin:6px 0 0">Quick look. Use Products page to search/filter.</p>
+        </div>
+        <a class="btn secondary" th:href="@{/products}">Open Products →</a>
+      </div>
+      <div class="product-grid" style="margin-top:14px">
+        <div class="card product-card" th:each="p,iter : ${products}" th:if="${iter.index < 8}">
+          <div class="product-img">
+            <img th:if="${p.imageUrl != null}" th:src="${p.imageUrl}" alt="product"/>
+            <div th:if="${p.imageUrl == null}" class="muted">No image</div>
+          </div>
+          <div class="product-body">
+            <div class="row" style="align-items:center;justify-content:space-between">
+              <b th:text="${p.name}">Name</b>
+              <span class="chip" th:text="${p.purpose}">PURPOSE</span>
+            </div>
+            <div class="muted" style="margin-top:6px" th:text="${p.description}">desc</div>
+            <div class="kv">
+              <span class="chip">₹ <span th:text="${p.price}">0</span></span>
+              <span class="chip">Stock: <span th:text="${p.stock}">0</span></span>
+            </div>
+            <form method="post" th:action="@{/cart/add}" style="margin-top:10px">
+              <input type="hidden" name="productId" th:value="${p.id}"/>
+              <button class="btn success" type="submit">Add to cart</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments :: footer}"></div>
+  <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

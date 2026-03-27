@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body>
+  <div th:replace="~{fragments :: nav}"></div>
+
+  <div class="container">
+    <div class="card">
+      <h2 style="margin:0 0 6px">Admin Dashboard</h2>
+      <p class="muted" style="margin:0 0 14px">Manage products, view orders, handle return requests.</p>
+
+      <div class="grid grid-3">
+        <div class="card" style="box-shadow:none">
+          <div class="chip">Products</div>
+          <h3 style="margin:10px 0 0" th:text="${productCount}">0</h3>
+          <a class="btn secondary" th:href="@{/admin/products}" style="margin-top:10px">Manage</a>
+        </div>
+        <div class="card" style="box-shadow:none">
+          <div class="chip">Orders</div>
+          <h3 style="margin:10px 0 0" th:text="${orderCount}">0</h3>
+          <a class="btn secondary" th:href="@{/admin/orders}" style="margin-top:10px">View</a>
+        </div>
+        <div class="card" style="box-shadow:none">
+          <div class="chip">Pending Returns</div>
+          <h3 style="margin:10px 0 0" th:text="${pendingReturns.size()}">0</h3>
+          <a class="btn secondary" th:href="@{/admin/returns}" style="margin-top:10px">Handle</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments :: footer}"></div>
+  <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

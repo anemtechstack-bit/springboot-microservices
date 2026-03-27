@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Order Details</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+
+<body>
+  <div th:replace="~{fragments :: nav}"></div>
+
+  <div class="container" style="padding-top:18px">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div>
+          <h2 style="margin:0 0 6px">Order #<span th:text="${order.id}">0</span></h2>
+          <div class="muted">
+            Status:
+            <b th:text="${order.status}">PLACED</b>
+            <span style="padding:0 8px">•</span>
+            Date:
+            <b th:text="${#temporals.format(order.createdAt, 'dd-MMM-yyyy HH:mm')}">-</b>
+          </div>
+        </div>
+
+        <form th:if="${order.status.toString() == 'PLACED'}"
+              th:action="@{/orders/{id}/cancel(id=${order.id})}"
+              method="post"
+              style="margin:0">
+          <button class="btn danger" type="submit">Cancel Order</button>
+        </form>
+      </div>
+
+      <hr style="margin:16px 0;opacity:.2"/>
+
+      <h3 style="margin:0 0 10px">Items</h3>
+
+      <div style="overflow:auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th style="text-align:right">Unit Price</th>
+              <th style="text-align:right">Qty</th>
+              <th style="text-align:right">Line Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="it : ${order.items}">
+              <td th:text="${it.product.name}">Product</td>
+              <td style="text-align:right" th:text="${it.unitPrice}">0</td>
+              <td style="text-align:right" th:text="${it.quantity}">0</td>
+              <td style="text-align:right" th:text="${it.lineTotal()}">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;margin-top:12px">
+        <div class="card" style="min-width:260px">
+          <div style="display:flex;justify-content:space-between">
+            <span class="muted">Total</span>
+            <b th:text="${order.totalAmount}">0</b>
+          </div>
+        </div>
+      </div>
+
+      <!--<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+        <a class="btn secondary" th:href="@{/orders}">Back</a>
+        <a class="btn" th:href="@{/returns/new}">Request Return</a>
+      </div>-->
+	  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+	    <a class="btn secondary" th:href="@{/orders}">Back</a>
+	    <a class="btn" th:href="@{/returns}">Request Return</a>
+	  </div>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments :: footer}"></div>
+</body>
+</html>
